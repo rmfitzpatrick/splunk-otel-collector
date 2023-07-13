@@ -10,8 +10,6 @@
 
 (a deep joke)
 
----
-
 ## Overview
 
 * i. recap on o11y
@@ -75,8 +73,6 @@ on_request({
 
 The act of surfacing takes many forms, all of which are ~~bitterly~~ inherently context specific.
 
----
-
 It will always require a dedicated handle or some adequate proxy (where) for the state to be surfaced.
 
 ---
@@ -134,8 +130,6 @@ TARGET SOURCE FSTYPE OPTIONS
 #   the uptime of the system (including time spent in suspend) and the amount of time spent in the idle process.
 ```
 
----
-
 *From https://github.com/torvalds/linux/blob/master/fs/proc/uptime.c*
 ```c
 seq_printf(m, "%lu.%02lu %lu.%02lu\n",
@@ -145,14 +139,13 @@ seq_printf(m, "%lu.%02lu %lu.%02lu\n",
           (idle.tv_nsec / (NSEC_PER_SEC / 100)));
 ```
 
+---
+![:scale 25%](paws.png "I am not a kernel dev")
 `CLOCK_BOOTTIME` - https://www.man7.org/linux/man-pages/man7/time_namespaces.7.html
 
 `CPUTIME_IDLE` - https://github.com/torvalds/linux/blob/master/include/linux/kernel_stat.h
  - https://github.com/torvalds/linux/blob/master/kernel/sched/cputime.c ???
 
----
-
-![:scale 50%](paws.png "I am not a kernel dev")
 *https://github.com/torvalds/linux/blob/master/kernel/time/timekeeping.c*
 ```c
 u64 notrace ktime_get_boot_fast_ns(void)
@@ -187,8 +180,6 @@ Observability is zero without a how...
 
 ![:scale 50%](opentelemetry.png "OpenTelemetry logo")
 
----
-
 *What is it? [source](https://opentelemetry.io/)*
 * "OpenTelemetry is a collection of APIs, SDKs, and tools."
 * "OpenTelemetry is a CNCF incubating project. Formed through a merger of the [OpenTracing](https://opentracing.io/) and [OpenCensus](https://opencensus.io/) projects."
@@ -196,8 +187,6 @@ Observability is zero without a how...
 ---
 
 OpenTelemetry specifications are maintained here: https://github.com/open-telemetry/opentelemetry-specification/tree/main/specification
-
----
 
 In OpenTelemetry there are currently three standardized types of state presentation (telemetry).
 
@@ -209,8 +198,6 @@ In OpenTelemetry there are currently three standardized types of state presentat
 Their reference implementation, used by effectively all OpenTelemetry libraries, is the OpenTelemetry Protocol (OTLP).
 
 It is located here: https://github.com/open-telemetry/opentelemetry-proto
-
----
 
 All of these telemetry types share a metadata envelope called a *Resource* ~defined by
 https://github.com/open-telemetry/opentelemetry-proto/blob/main/opentelemetry/proto/resource/v1/resource.proto
@@ -349,17 +336,13 @@ This is good for users in avoiding vendor lock-in while adopting OTel dependenci
 
 But this is limiting for them in reporting options.
 
----
-
 It also creates a scenario where all telemetry reporters would need specialized configuration and handling of the telemetry to be accessible.
 
 ---
 
 ## I. The Collector
 
----
-
-```mermaid
+<div class="mermaid">
 mindmap
   root((Collector))
     traces<br>metrics
@@ -378,7 +361,7 @@ mindmap
       python<br>on ec2
     metrics
       dotnet<br>on ecs
-```
+</div>
 
 ---
 
