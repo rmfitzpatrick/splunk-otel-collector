@@ -161,7 +161,7 @@ func Get() (otelcol.Factories, error) {
 		receivercreator.NewFactory(),
 		redisreceiver.NewFactory(),
 		sapmreceiver.NewFactory(),
-		scriptedinputreceiver.NewFactory(),
+		scriptedinputsreceiver.NewFactory(),
 		signalfxreceiver.NewFactory(),
 		signalfxgatewayprometheusremotewritereceiver.NewFactory(),
 		simpleprometheusreceiver.NewFactory(),
