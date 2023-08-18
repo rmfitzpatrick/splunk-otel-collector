@@ -18,7 +18,6 @@ import (
 	"bufio"
 	"context"
 	"io"
-	"strconv"
 	"sync"
 	"time"
 
@@ -38,7 +37,7 @@ const (
 	// if MaxLogSize is not set
 	DefaultMaxLogSize = 1024 * 1024
 
-	DefaultIntervalSeconds = 60
+	DefaultIntervalSeconds = "60s"
 )
 
 func init() {
@@ -58,7 +57,7 @@ func (c *Config) Build(logger *zap.SugaredLogger) (operator.Operator, error) {
 	}
 
 	if c.CollectionInterval == "" {
-		c.CollectionInterval = strconv.Itoa(DefaultIntervalSeconds)
+		c.CollectionInterval = DefaultIntervalSeconds
 	}
 
 	encoding, err := c.Encoding.Build()

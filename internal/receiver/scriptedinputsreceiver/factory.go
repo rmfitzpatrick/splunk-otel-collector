@@ -29,20 +29,20 @@ const (
 )
 
 func NewFactory() receiver.Factory {
-	return adapter.NewFactory(ReceiverType{}, stability)
+	return adapter.NewFactory(scriptedInputsReceiver{}, stability)
 }
 
-var _ adapter.LogReceiverType = (*ReceiverType)(nil)
+var _ adapter.LogReceiverType = (*scriptedInputsReceiver)(nil)
 
-type ReceiverType struct{}
+type scriptedInputsReceiver struct{}
 
 // Type is the receiver type
-func (f ReceiverType) Type() component.Type {
+func (f scriptedInputsReceiver) Type() component.Type {
 	return typeStr
 }
 
 // CreateDefaultConfig creates a config with type and version
-func (f ReceiverType) CreateDefaultConfig() component.Config {
+func (f scriptedInputsReceiver) CreateDefaultConfig() component.Config {
 	return &ScriptConfig{
 		BaseConfig: adapter.BaseConfig{
 			Operators: []operator.Config{},
@@ -52,7 +52,7 @@ func (f ReceiverType) CreateDefaultConfig() component.Config {
 }
 
 // BaseConfig gets the base config from config, for now
-func (f ReceiverType) BaseConfig(cfg component.Config) adapter.BaseConfig {
+func (f scriptedInputsReceiver) BaseConfig(cfg component.Config) adapter.BaseConfig {
 	return cfg.(*ScriptConfig).BaseConfig
 }
 
@@ -63,6 +63,6 @@ type ScriptConfig struct {
 }
 
 // InputConfig unmarshals the input operator
-func (f ReceiverType) InputConfig(cfg component.Config) operator.Config {
+func (f scriptedInputsReceiver) InputConfig(cfg component.Config) operator.Config {
 	return operator.NewConfig(&cfg.(*ScriptConfig).InputConfig)
 }
