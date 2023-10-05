@@ -93,11 +93,12 @@
         state: present
       check_mode: yes
 
-    - name: Assert SPLUNK_LISTEN_INTERFACE env var is set
+    - name: Assert SPLUNK_LISTEN_INTERFACE env var isn't set
       ansible.builtin.lineinfile:
         line: SPLUNK_LISTEN_INTERFACE=127.0.0.1
+        regex: ^SPLUNK_LISTEN_INTERFACE=.*
         dest: /etc/otel/collector/splunk-otel-collector.conf
-        state: present
+        state: absent
       check_mode: yes
 
     - name: Look for ballast config in collector service output

@@ -109,7 +109,7 @@ def verify_env_file(container, mode="agent", config_path=None, memory=TOTAL_MEMO
     verify_config_file(container, env_path, "SPLUNK_HEC_URL", f"{ingest_url}/v1/log")
     verify_config_file(container, env_path, "SPLUNK_HEC_TOKEN", SPLUNK_ACCESS_TOKEN)
     verify_config_file(container, env_path, "SPLUNK_MEMORY_TOTAL_MIB", memory)
-    verify_config_file(container, env_path, "SPLUNK_LISTEN_INTERFACE", listen_addr)
+    verify_config_file(container, env_path, "SPLUNK_LISTEN_INTERFACE", False, False)
 
     if ballast:
         verify_config_file(container, env_path, "SPLUNK_BALLAST_SIZE_MIB", ballast)

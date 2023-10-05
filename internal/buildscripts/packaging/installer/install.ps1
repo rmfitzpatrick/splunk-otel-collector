@@ -41,7 +41,7 @@
     .EXAMPLE
     .\install.ps1 -access_token "ACCESSTOKEN" -mode "gateway"
 .PARAMETER network_interface
-    (OPTIONAL) The network interface the collector receivers listen on. (default: "0.0.0.0")
+    (OPTIONAL) The network interface the collector receivers listen on. (default: "127.0.0.1" for agent mode and "0.0.0.0" otherwise)
     .EXAMPLE
     .\install.ps1 -access_token "ACCESSTOKEN" -network_interface "127.0.0.1"
 .PARAMETER ingest_url
@@ -113,7 +113,7 @@ param (
     [string]$realm = "us0",
     [string]$memory = "512",
     [ValidateSet('agent','gateway')][string]$mode = "agent",
-    [string]$network_interface = "0.0.0.0",
+    [string]$network_interface = "",
     [string]$ingest_url = "",
     [string]$api_url = "",
     [string]$trace_url = "",
@@ -582,7 +582,9 @@ update_registry -path "$regkey" -name "SPLUNK_HEC_TOKEN" -value "$hec_token"
 update_registry -path "$regkey" -name "SPLUNK_HEC_URL" -value "$hec_url"
 update_registry -path "$regkey" -name "SPLUNK_INGEST_URL" -value "$ingest_url"
 update_registry -path "$regkey" -name "SPLUNK_MEMORY_TOTAL_MIB" -value "$memory"
-update_registry -path "$regkey" -name "SPLUNK_LISTEN_INTERFACE" -value "$network_interface"
+if ($network_interface -Ne "") {
+  update_registry -path "$regkey" -name "SPLUNK_LISTEN_INTERFACE" -value "$network_interface"
+}
 update_registry -path "$regkey" -name "SPLUNK_REALM" -value "$realm"
 update_registry -path "$regkey" -name "SPLUNK_TRACE_URL" -value "$trace_url"
 
